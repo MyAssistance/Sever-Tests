@@ -29,6 +29,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_lazy_route_resource lazy re
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_historico_historico_component__ = __webpack_require__("../../../../../src/app/pages/historico/historico.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_login_login_component__ = __webpack_require__("../../../../../src/app/pages/login/login.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_forgot_password_forgot_password_component__ = __webpack_require__("../../../../../src/app/pages/forgot-password/forgot-password.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__common_components_guard_auth_guard__ = __webpack_require__("../../../../../src/app/common_components/_guard/auth.guard.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,6 +39,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 /*Import dos formularios*/
+
 
 
 
@@ -62,12 +64,15 @@ var routes = [
     },
     {
         path: 'login',
-        component: __WEBPACK_IMPORTED_MODULE_5__pages_login_login_component__["a" /* LoginComponent */]
+        component: __WEBPACK_IMPORTED_MODULE_5__pages_login_login_component__["a" /* LoginComponent */],
+        canActivate: [__WEBPACK_IMPORTED_MODULE_7__common_components_guard_auth_guard__["a" /* AuthGuard */]]
     },
     {
-        path: 'recuperar-senha',
-        component: __WEBPACK_IMPORTED_MODULE_6__pages_forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */]
+        path: 'esqueci-senha',
+        component: __WEBPACK_IMPORTED_MODULE_6__pages_forgot_password_forgot_password_component__["a" /* ForgotPasswordComponent */],
+        canActivate: [__WEBPACK_IMPORTED_MODULE_7__common_components_guard_auth_guard__["a" /* AuthGuard */]]
     },
+    { path: '**', redirectTo: '/acompanhamento', pathMatch: 'full' },
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
@@ -180,6 +185,7 @@ var AppComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_historico_historico_component__ = __webpack_require__("../../../../../src/app/pages/historico/historico.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_login_login_component__ = __webpack_require__("../../../../../src/app/pages/login/login.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_forgot_password_forgot_password_component__ = __webpack_require__("../../../../../src/app/pages/forgot-password/forgot-password.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__common_components_guard_auth_guard__ = __webpack_require__("../../../../../src/app/common_components/_guard/auth.guard.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -218,6 +224,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 /*Import de bibliotecas*/
 
 /*Import das Páginas*/
+
 
 
 
@@ -269,12 +276,72 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_28__pages_acompanhamento_acompanhamento_component__["a" /* AcompanhamentoComponent */],
                 __WEBPACK_IMPORTED_MODULE_28__pages_acompanhamento_acompanhamento_component__["b" /* ClienteAtenderComponent */]
             ],
-            providers: [__WEBPACK_IMPORTED_MODULE_30__pages_login_login_component__["a" /* LoginComponent */]],
+            providers: [
+                __WEBPACK_IMPORTED_MODULE_30__pages_login_login_component__["a" /* LoginComponent */],
+                __WEBPACK_IMPORTED_MODULE_32__common_components_guard_auth_guard__["a" /* AuthGuard */]
+            ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */]],
             exports: []
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/common_components/_guard/auth.guard.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthGuard; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/esm5/common.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var AuthGuard = (function () {
+    function AuthGuard(_location) {
+        this._location = _location;
+        /*      this.response = false;*/
+    }
+    AuthGuard.prototype.canActivate = function () {
+        if (this.getCookie("dcJJe4ZEsB") != "%265nPPAJk0i%23%7BDBw%5D%3C%7B%2C%40%3Ad%2BRQGp7xb") {
+            return true;
+        }
+        else {
+            this._location.back();
+            return false;
+        }
+    };
+    AuthGuard.prototype.getCookie = function (cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    };
+    AuthGuard = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common__["Location"]])
+    ], AuthGuard);
+    return AuthGuard;
 }());
 
 
@@ -1067,7 +1134,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/pages/forgot-password/forgot-password.component.html":
 /***/ (function(module, exports) {
 
-module.exports = " <div fxLayout=\"row\" fxLayoutAlign=\"center center\" style=\"height: 100vh;\">\r\n        \r\n        <div class=\"login-img\" fxFlex=\"39\">\r\n        \t<img routerLink=\"/acompanhamento\" class=\"my-log-img\" src=\"assets/images/login_1.png\">\r\n        </div>\r\n\r\n        \r\n\r\n\t <div fxLayout=\"column\" fxLayoutAlign=\"center center\" fxFlex=\"61\">       \r\n\r\n      <div style=\"width: 17%;\">\r\n  \t\t\t<img routerLink=\"/login\" class=\"my-logo\" src=\"assets/images/logo-login.png\">\r\n  \t\t</div>\r\n\r\n\t\t<h4 class=\"my-recover\"> Recuperação senha </h4>\r\n\r\n        <mat-form-field fxFlexOffset=\"0\" class=\"my-inputs\">\r\n              <input matInput name=\"email\" placeholder=\"Insira seu email\" >\r\n        </mat-form-field>\r\n\r\n        <my-button-orange fxFlexOffset=\"2\" label=\"RECUPERAR\" class=\"enter-button\" ></my-button-orange>\r\n    \r\n        <span routerLink=\"/login\" fxFlexOffset=\"7\" class=\"forgot-password\">Eu sei minha senha!</span>\r\n    </div> \r\n\r\n  </div>\r\n"
+module.exports = " <div fxLayout=\"row\" fxLayoutAlign=\"center center\" style=\"height: 100vh;\">\r\n        \r\n        <div class=\"login-img\" fxFlex=\"39\">\r\n        \t<img routerLink=\"/acompanhamento\" class=\"my-log-img\" src=\"assets/images/login_1.png\">\r\n        </div>\r\n\r\n        \r\n\r\n\t <div fxLayout=\"column\" fxLayoutAlign=\"center center\" fxFlex=\"61\">       \r\n\r\n      <div style=\"width: 17%;\">\r\n  \t\t\t<img routerLink=\"/login\" class=\"my-logo\" src=\"assets/images/logo-login.png\">\r\n  \t\t</div>\r\n\r\n\t\t<h4 class=\"my-recover\"> Recuperação senha </h4>\r\n\r\n        <mat-form-field fxFlexOffset=\"0\" class=\"my-inputs\">\r\n              <input matInput name=\"email\" placeholder=\"Insira seu email\" >\r\n        </mat-form-field>\r\n\r\n        <button mat-button class='my-button' fxFlexOffset=\"2\"> RECUPERAR</button>\r\n\r\n        <span routerLink=\"/login\" fxFlexOffset=\"7\" class=\"forgot-password\">Eu sei minha senha!</span>\r\n    </div> \r\n\r\n  </div>\r\n"
 
 /***/ }),
 
@@ -1079,7 +1146,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".login-img {\n  margin: 0px;\n  background: black; }\n\n.my-log-img {\n  width: 100%;\n  height: 100%; }\n\n.my-logo {\n  width: 100%;\n  height: 100%; }\n\n.my-inputs {\n  width: 50%; }\n\n.enter-button {\n  width: 50%; }\n\n.forgot-password {\n  font-size: 13px;\n  color: #B5B5B5;\n  cursor: pointer; }\n\n.my-recover {\n  font-size: 19px;\n  font-weight: 300;\n  margin-top: 8.6%;\n  margin-bottom: 2%; }\n", ""]);
+exports.push([module.i, ".login-img {\n  margin: 0px;\n  background: black; }\n\n.my-log-img {\n  width: 100%;\n  height: 100%; }\n\n.my-logo {\n  width: 100%;\n  height: 100%; }\n\n.my-inputs {\n  width: 50%; }\n\n.enter-button {\n  width: 50%; }\n\n.forgot-password {\n  font-size: 13px;\n  color: #B5B5B5;\n  cursor: pointer; }\n\n.my-recover {\n  font-size: 19px;\n  font-weight: 300;\n  margin-top: 8.6%;\n  margin-bottom: 2%; }\n\n.my-button {\n  background: linear-gradient(-150deg, #FF8405 0%, #FF433F 100%);\n  box-shadow: 0 2px 7px 0 rgba(120, 137, 149, 0.25);\n  border-radius: 3px;\n  font-size: 13px;\n  color: #FFFFFF;\n  width: 50%;\n  padding-top: 0.2vw;\n  padding-bottom: 0.2vw; }\n", ""]);
 
 // exports
 
@@ -1328,13 +1395,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var HeaderToolbarComponent = (function () {
-    function HeaderToolbarComponent(http, router) {
+    function HeaderToolbarComponent(http, router, route) {
         this.http = http;
         this.router = router;
+        this.route = route;
         this.menus = [false, false, false];
-        this.menuActive = this.getCookie("menuActive");
-        this.menus[this.menuActive] = true;
-        //console.log(route._routerState.snapshot.url);
+        if (route.snapshot.url[0].path == 'acompanhamento') {
+            this.menus[1] = true;
+        }
+        else if (route.snapshot.url[0].path == 'historico') {
+            this.menus[2] = true;
+        }
+        else if (route.snapshot.url[0].path == 'cadastro-cliente') {
+            this.menus[0] = true;
+        }
     }
     HeaderToolbarComponent.prototype.ngOnInit = function () {
     };
@@ -1394,7 +1468,7 @@ var HeaderToolbarComponent = (function () {
             template: __webpack_require__("../../../../../src/app/pages/header-toolbar/header-toolbar.component.html"),
             styles: [__webpack_require__("../../../../../src/app/pages/header-toolbar/header-toolbar.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["Router"], __WEBPACK_IMPORTED_MODULE_2__angular_router__["ActivatedRoute"]])
     ], HeaderToolbarComponent);
     return HeaderToolbarComponent;
 }());
@@ -1496,7 +1570,7 @@ var ELEMENT_DATA_PRECOS = [];
 /***/ "../../../../../src/app/pages/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form #loginForm=\"ngForm\" >\r\n\r\n <div fxLayout=\"row\" fxLayoutAlign=\"center center\" style=\"height: 100vh;\">\r\n\r\n  <div class=\"login-img\" fxFlex=\"39\">\r\n   <img routerLink=\"/acompanhamento\" class=\"my-log-img\" src=\"../assets/images/login_1.png\">\r\n </div>\r\n\r\n <div fxLayout=\"column\" fxLayoutAlign=\"center center\" fxFlex=\"61\">        \r\n\r\n  <div style=\"width: 17%;\">\r\n   <img routerLink=\"/acompanhamento\" class=\"my-logo\" src=\"../assets/images/logo-login.png\">\r\n </div>\r\n\r\n <mat-form-field fxFlexOffset=\"5\" class=\"my-inputs\">\r\n  <input [(ngModel)] = \"user\" matInput name=\"user\" placeholder=\"Insira seu email\" >\r\n</mat-form-field>\r\n\r\n<mat-form-field class=\"my-inputs\">\r\n  <input  [(ngModel)] = \"pass\" matInput name=\"pass\" placeholder=\"Senha\" >\r\n</mat-form-field>\r\n\r\n<button mat-button class='my-button' fxFlexOffset=\"2\" (click)=\"login(loginForm)\" >ENTRAR</button>\r\n<button mat-button class='my-button' fxFlexOffset=\"2\" (click)=\"signup(loginForm)\"> CADASTRAR</button>\r\n<button mat-button class='my-button' fxFlexOffset=\"2\" (click)=\"teste()\"> GET HTML</button>\r\n<button mat-button class='my-button' fxFlexOffset=\"2\" (click)=\"getHeader()\"> GET HEADER</button>\r\n\r\n<!-- <my-button-orange fxFlexOffset=\"2\" label=\"ENTRAR\" class=\"enter-button\" (click)=\"login(loginForm)\"></my-button-orange>\r\n<my-button-orange fxFlexOffset=\"2\" label=\"CADASTRAR\" class=\"enter-button\" (click)=\"signup(loginForm)\"></my-button-orange>\r\n\r\n<my-button-orange fxFlexOffset=\"2\" label=\"GET HTML\" class=\"enter-button\" (click)=\"teste()\"></my-button-orange>\r\n\r\n<my-button-orange fxFlexOffset=\"2\" label=\"Header\" class=\"enter-button\" (click)=\"getHeader()\"></my-button-orange> -->\r\n\r\n<span routerLink=\"/esqueci-senha\" fxFlexOffset=\"7\" class=\"forgot-password\">Esqueceu sua senha?</span>\r\n</div> \r\n\r\n</div>\r\n\r\n</form>\r\n"
+module.exports = "<form #loginForm=\"ngForm\" >\r\n\r\n <div fxLayout=\"row\" fxLayoutAlign=\"center center\" style=\"height: 100vh;\">\r\n\r\n  <div class=\"login-img\" fxFlex=\"39\">\r\n   <img routerLink=\"/acompanhamento\" class=\"my-log-img\" src=\"../assets/images/login_1.png\">\r\n </div>\r\n\r\n <div fxLayout=\"column\" fxLayoutAlign=\"center center\" fxFlex=\"61\">        \r\n\r\n  <div style=\"width: 17%;\">\r\n   <img routerLink=\"/acompanhamento\" class=\"my-logo\" src=\"../assets/images/logo-login.png\">\r\n </div>\r\n\r\n <mat-form-field fxFlexOffset=\"5\" class=\"my-inputs\">\r\n  <input [(ngModel)] = \"user\" matInput name=\"user\" placeholder=\"Insira seu email\" >\r\n</mat-form-field>\r\n\r\n<mat-form-field class=\"my-inputs\">\r\n  <input  [(ngModel)] = \"pass\" matInput name=\"pass\" placeholder=\"Senha\" >\r\n</mat-form-field>\r\n\r\n<button mat-button class='my-button' fxFlexOffset=\"2\" (click)=\"login(loginForm)\" >ENTRAR</button>\r\n<button mat-button class='my-button' fxFlexOffset=\"2\" (click)=\"signup(loginForm)\"> CADASTRAR</button>\r\n\r\n<!-- <my-button-orange fxFlexOffset=\"2\" label=\"Header\" class=\"enter-button\" (click)=\"getHeader()\"></my-button-orange> -->\r\n\r\n<span routerLink=\"/esqueci-senha\" fxFlexOffset=\"7\" class=\"forgot-password\">Esqueceu sua senha?</span>\r\n</div> \r\n\r\n</div>\r\n\r\n</form>\r\n"
 
 /***/ }),
 
@@ -1545,9 +1619,11 @@ var LoginComponent = (function () {
     }
     LoginComponent.prototype.canActivate = function (route, state) {
         if (this.getCookie("dcJJe4ZEsB") == "%265nPPAJk0i%23%7BDBw%5D%3C%7B%2C%40%3Ad%2BRQGp7xb") {
+            console.log("conso tre");
             return true;
         }
         else {
+            console.log("log false");
             // not logged in so redirect to login page with the return url
             this.router.navigate(['/login']);
             return false;
@@ -1566,14 +1642,6 @@ var LoginComponent = (function () {
         var req = this.http.post('http://localhost:3000/log', loginForm.value)
             .subscribe(function (res) {
             _this.router.navigate(['/acompanhamento']);
-        }, function (err) {
-            console.log("Error occured: " + err.error.message);
-        });
-    };
-    LoginComponent.prototype.teste = function () {
-        var req = this.http.get('http://localhost:3000/log')
-            .subscribe(function (res) {
-            console.log(res);
         }, function (err) {
             console.log("Error occured: " + err.error.message);
         });
